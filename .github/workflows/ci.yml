@@ -13,13 +13,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
-        os: [ubuntu-latest]
+        # Python 3.9 is no longer prebuilt for the newest ubuntu image, so that
+        # one entry runs on the last image that still ships a 3.9 build.
         include:
-          # Python 3.9 is no longer prebuilt for the newest ubuntu image, so pin
-          # it to the last image that still ships a 3.9 build.
           - python-version: "3.9"
             os: ubuntu-22.04
+          - python-version: "3.10"
+            os: ubuntu-latest
+          - python-version: "3.11"
+            os: ubuntu-latest
+          - python-version: "3.12"
+            os: ubuntu-latest
+          - python-version: "3.13"
+            os: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
