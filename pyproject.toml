@@ -1,0 +1,83 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentguard"
+dynamic = ["version"]
+description = "Reliability tools for LLM agents: structured output, smart retries, tool calling, cost tracking and tracing. Zero dependencies, works with any model."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Suraj Kumar" }]
+keywords = [
+    "llm",
+    "agents",
+    "agent",
+    "structured-output",
+    "json-schema",
+    "function-calling",
+    "tool-calling",
+    "retry",
+    "backoff",
+    "cost-tracking",
+    "tokens",
+    "observability",
+    "tracing",
+    "provider-agnostic",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
+]
+dependencies = []
+
+[project.optional-dependencies]
+exact = ["tiktoken>=0.7"]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.10", "build>=1.2"]
+
+[project.scripts]
+agentguard = "agentguard.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Surajflow/agentguard"
+Documentation = "https://github.com/Surajflow/agentguard/tree/main/docs"
+Issues = "https://github.com/Surajflow/agentguard/issues"
+Changelog = "https://github.com/Surajflow/agentguard/blob/main/CHANGELOG.md"
+
+[tool.setuptools.dynamic]
+version = { attr = "agentguard.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+agentguard = ["py.typed"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"
+
+[tool.mypy]
+files = ["src"]
+ignore_missing_imports = true

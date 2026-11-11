@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install the package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+
+      - name: Confirm zero runtime dependencies
+        run: python -c "import agentguard, sys; print('agentguard', agentguard.__version__, 'on', sys.version.split()[0])"
+
+      - name: Run the test suite
+        run: python -m unittest discover -s tests -v
+
+      - name: Run the examples (offline, no API keys)
+        run: |
+          for f in examples/*.py; do
+            echo "== $f"
+            python "$f"
+          done
+
+      - name: CLI smoke test
+        run: |
+          agentguard doctor
+          agentguard models
+          agentguard cost --model gpt-4o-mini --input 1000 --output 500
+          agentguard trace runs/agent_loop.jsonl --timeline
+
+  lint:
+    name: lint and types
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip ruff mypy
+      - run: ruff check src tests examples
+      - run: mypy src --ignore-missing-imports

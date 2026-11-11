@@ -1,0 +1,30 @@
+# byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+build/
+dist/
+.eggs/
+
+# environments
+.venv/
+venv/
+env/
+
+# tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# trace output from the examples
+runs/
+*.jsonl
+
+# editors / os
+.vscode/
+.idea/
+.DS_Store
