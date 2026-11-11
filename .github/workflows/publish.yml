@@ -35,8 +35,8 @@ jobs:
       - name: Install the wheel and run the CLI
         run: |
           python -m pip install dist/*.whl
-          python -c "import agentguard, sys; print('agentguard', agentguard.__version__, 'on', sys.version.split()[0])"
-          agentguard doctor
+          python -c "import agentrig, sys; print('agentrig', agentrig.__version__, 'on', sys.version.split()[0])"
+          agentrig doctor
 
       - name: Run the test suite against the installed package
         run: python -m unittest discover -s tests

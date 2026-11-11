@@ -83,7 +83,7 @@ def get_price(model: str) -> tuple[float, float]:
             return PRICES[known]
     raise KeyError(
         f"unknown model {model!r}; add it with "
-        f"agentguard.register_price({model!r}, input, output)"
+        f"agentrig.register_price({model!r}, input, output)"
     )
 
 

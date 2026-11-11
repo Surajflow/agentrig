@@ -2,7 +2,7 @@ import os
 import tempfile
 import unittest
 
-from agentguard.trace import Tracer, load, replay, summary
+from agentrig.trace import Tracer, load, replay, summary
 
 
 class TracerTests(unittest.TestCase):

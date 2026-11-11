@@ -74,7 +74,7 @@ def _cmd_models(args: argparse.Namespace) -> int:
     print(f"{'model'.ljust(width)}  {'input/1M':>9}  {'output/1M':>10}")
     for name, (price_in, price_out) in rows:
         print(f"{name.ljust(width)}  {price_in:>9.2f}  {price_out:>10.2f}")
-    print("\nUSD per 1M tokens, indicative snapshot -- override with agentguard.register_price().")
+    print("\nUSD per 1M tokens, indicative snapshot -- override with agentrig.register_price().")
     return 0
 
 
@@ -112,7 +112,7 @@ def _cmd_trace(args: argparse.Namespace) -> int:
 
 def _cmd_doctor(args: argparse.Namespace) -> int:
     ok = True
-    print(f"agentguard   {__version__}")
+    print(f"agentrig   {__version__}")
     print(f"python     {sys.version.split()[0]}")
     print(f"prices     {len(PRICES)} models")
 
@@ -158,10 +158,10 @@ def _cmd_doctor(args: argparse.Namespace) -> int:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="agentguard",
+        prog="agentrig",
         description="Reliability tools for LLM agents: validate JSON, price calls, inspect traces.",
     )
-    parser.add_argument("--version", action="version", version=f"agentguard {__version__}")
+    parser.add_argument("--version", action="version", version=f"agentrig {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
 
     p_validate = sub.add_parser("validate", help="validate JSON data against a JSON Schema")

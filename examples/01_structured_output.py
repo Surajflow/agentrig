@@ -6,7 +6,7 @@ No API key needed: the "model" is a stub that misbehaves on purpose, once.
 Swap `fake_model` for your provider call and nothing else changes.
 """
 
-from agentguard import SchemaError, schema_instruction, structured_call
+from agentrig import SchemaError, schema_instruction, structured_call
 
 INVOICE = {
     "type": "object",

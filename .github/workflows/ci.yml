@@ -41,7 +41,7 @@ jobs:
           python -m pip install -e .
 
       - name: Confirm zero runtime dependencies
-        run: python -c "import agentguard, sys; print('agentguard', agentguard.__version__, 'on', sys.version.split()[0])"
+        run: python -c "import agentrig, sys; print('agentrig', agentrig.__version__, 'on', sys.version.split()[0])"
 
       - name: Run the test suite
         run: python -m unittest discover -s tests -v
@@ -55,10 +55,10 @@ jobs:
 
       - name: CLI smoke test
         run: |
-          agentguard doctor
-          agentguard models
-          agentguard cost --model gpt-4o-mini --input 1000 --output 500
-          agentguard trace runs/agent_loop.jsonl --timeline
+          agentrig doctor
+          agentrig models
+          agentrig cost --model gpt-4o-mini --input 1000 --output 500
+          agentrig trace runs/agent_loop.jsonl --timeline
 
   lint:
     name: lint and types

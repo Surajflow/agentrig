@@ -15,7 +15,7 @@ labels: bug
 ```
 
 **Environment**
-- agentguard version (`python -c "import agentguard; print(agentguard.__version__)"`):
+- agentrig version (`python -c "import agentrig; print(agentrig.__version__)"`):
 - Python version:
 - Provider, or "scripted model":
 - If this is a parsing or classification miss, paste the raw model output or error text here:

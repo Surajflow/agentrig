@@ -1,6 +1,6 @@
 # Design notes
 
-Why `agentguard` looks the way it does. Read this before proposing a change — most
+Why `agentrig` looks the way it does. Read this before proposing a change — most
 of the odd-looking decisions are load-bearing.
 
 ## 1. The model call is yours, not ours
@@ -13,7 +13,7 @@ no `BaseProvider`, no registry of SDKs. Two consequences:
 - **Provider churn cannot break you.** When a vendor renames a field, you fix one
   line in your wrapper, not a dependency upgrade.
 
-The cost is that `agentguard` cannot stream for you or manage your HTTP session. It
+The cost is that `agentrig` cannot stream for you or manage your HTTP session. It
 does not want to.
 
 ## 2. Retry decisions come from classification, not from the exception type
@@ -89,6 +89,6 @@ and the exception is re-raised so tracing cannot change control flow.
 response adapter, an optional OTLP exporter.
 
 **Would refuse:** a bundled HTTP client, a prompt template library, an agent
-framework, a hosted dashboard, or anything that makes `pip install agentguard` pull
+framework, a hosted dashboard, or anything that makes `pip install agentrig` pull
 a dependency. This package is at its best when it stays the boring layer that
 never breaks.

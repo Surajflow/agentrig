@@ -1,6 +1,6 @@
 import unittest
 
-from agentguard.schema import (
+from agentrig.schema import (
     SchemaError,
     ValidationError,
     is_valid,

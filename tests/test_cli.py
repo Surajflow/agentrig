@@ -5,8 +5,8 @@ import tempfile
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 
-from agentguard.cli import main
-from agentguard.trace import Tracer
+from agentrig.cli import main
+from agentrig.trace import Tracer
 
 
 def run(*argv):

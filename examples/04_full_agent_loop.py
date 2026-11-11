@@ -9,7 +9,7 @@ one HTTP call to your provider and the rest of the loop is unchanged.
 import json
 from typing import Literal
 
-from agentguard import (
+from agentrig import (
     CostTracker,
     RetryPolicy,
     SchemaError,
@@ -139,7 +139,7 @@ def main():
         tracer.event("run_finished", cost_usd=round(costs.total_cost, 6))
 
     print("\ncost:", json.dumps(costs.summary()["cost_usd"]))
-    print("trace: runs/agent_loop.jsonl  (inspect with: agentguard trace runs/agent_loop.jsonl --timeline)")
+    print("trace: runs/agent_loop.jsonl  (inspect with: agentrig trace runs/agent_loop.jsonl --timeline)")
 
 
 if __name__ == "__main__":

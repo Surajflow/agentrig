@@ -1,6 +1,6 @@
 import unittest
 
-from agentguard.tokens import (
+from agentrig.tokens import (
     PRICES,
     CostTracker,
     Usage,

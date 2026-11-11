@@ -3,7 +3,7 @@ import json
 import unittest
 from typing import List, Literal, Optional
 
-from agentguard.tools import (
+from agentrig.tools import (
     Tool,
     ToolRegistry,
     json_schema_from_signature,

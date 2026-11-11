@@ -4,7 +4,7 @@ Write the function you would have written anyway. Type hints become the JSON
 Schema, the docstring becomes the description, and :class:`ToolRegistry` gives
 you provider-ready declarations plus safe dispatch.
 
-    >>> from agentguard import tool, ToolRegistry
+    >>> from agentrig import tool, ToolRegistry
     >>> @tool
     ... def get_weather(city: str, units: str = "celsius") -> dict:
     ...     '''Current weather for a city.

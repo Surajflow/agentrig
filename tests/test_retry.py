@@ -1,7 +1,7 @@
 import random
 import unittest
 
-from agentguard.retry import (
+from agentrig.retry import (
     RETRYABLE,
     RetryError,
     RetryPolicy,

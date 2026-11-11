@@ -1,16 +1,16 @@
-"""agentguard -- the reliability layer for LLM agents.
+"""agentrig -- the reliability layer for LLM agents.
 
 Five small modules, zero dependencies, no provider lock-in:
 
-* :mod:`agentguard.schema`   structured output that repairs itself
-* :mod:`agentguard.retry`    retries that understand *why* a call failed
-* :mod:`agentguard.tokens`   token estimation, cost tracking, context fitting
-* :mod:`agentguard.tools`    Python functions -> tool schemas -> safe dispatch
-* :mod:`agentguard.trace`    local JSONL tracing you can replay
+* :mod:`agentrig.schema`   structured output that repairs itself
+* :mod:`agentrig.retry`    retries that understand *why* a call failed
+* :mod:`agentrig.tokens`   token estimation, cost tracking, context fitting
+* :mod:`agentrig.tools`    Python functions -> tool schemas -> safe dispatch
+* :mod:`agentrig.trace`    local JSONL tracing you can replay
 
 Quick start::
 
-    from agentguard import structured_call, ToolRegistry, tool, CostTracker, Tracer
+    from agentrig import structured_call, ToolRegistry, tool, CostTracker, Tracer
 
     def call_model(messages):          # your provider, any provider
         return my_llm(messages)        # returns text

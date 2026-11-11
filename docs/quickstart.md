@@ -7,13 +7,13 @@ for a stub.
 ## Install
 
 ```bash
-pip install agentguard
-agentguard doctor     # verifies JSON extraction, the repair loop and pricing
+pip install agentrig
+agentrig doctor     # verifies JSON extraction, the repair loop and pricing
 ```
 
 ## Step 1 — wrap your model call
 
-`agentguard` never talks to a provider for you. It hands you the conversation and
+`agentrig` never talks to a provider for you. It hands you the conversation and
 takes back text. That is the whole contract, so wrap whatever you already use:
 
 ```python
@@ -31,13 +31,13 @@ def call_model(messages):
 ```
 
 For Anthropic the same function is `response.content[0].text`; for Gemini,
-`response.candidates[0].content.parts[0].text`. `agentguard.providers.extract_text`
+`response.candidates[0].content.parts[0].text`. `agentrig.providers.extract_text`
 does all three if you prefer to pass raw response dicts.
 
 ## Step 2 — get JSON you can trust
 
 ```python
-from agentguard import structured_call, schema_instruction
+from agentrig import structured_call, schema_instruction
 
 TICKET = {
     "type": "object",
@@ -69,7 +69,7 @@ Two details worth knowing:
 ## Step 3 — give the model tools
 
 ```python
-from agentguard import ToolRegistry, tool
+from agentrig import ToolRegistry, tool
 
 @tool
 def get_ticket(ticket_id: str) -> dict:
@@ -87,7 +87,7 @@ tools = registry.specs("openai")     # pass to client.chat.completions.create(to
 In your loop, feed the model's tool call straight back in:
 
 ```python
-from agentguard import extract_tool_calls
+from agentrig import extract_tool_calls
 
 for call in extract_tool_calls("openai", response.model_dump()):
     output = registry.dispatch(call["name"], call["arguments"])
@@ -100,7 +100,7 @@ name costs one turn instead of the whole run.
 ## Step 4 — survive the network
 
 ```python
-from agentguard import RetryPolicy, retry_call
+from agentrig import RetryPolicy, retry_call
 
 reply = retry_call(
     lambda: call_model(messages),
@@ -115,7 +115,7 @@ backoff with jitter.
 ## Step 5 — see what it cost and what happened
 
 ```python
-from agentguard import CostTracker, Tracer, normalize_usage
+from agentrig import CostTracker, Tracer, normalize_usage
 
 costs = CostTracker(budget=0.50)
 
@@ -131,7 +131,7 @@ print(costs.summary())
 ```
 
 ```bash
-agentguard trace runs/triage.jsonl --timeline
+agentrig trace runs/triage.jsonl --timeline
 ```
 
 ## Putting it together
@@ -146,6 +146,6 @@ offline. Read it, then replace the scripted model with your own.
 | --- | --- | --- |
 | `structured_call` never succeeds | the schema is stricter than the task, e.g. `maxLength` too small | read the last error; loosen the constraint |
 | Repair loop burns tokens | `max_attempts` too high for a cheap model | 2–3 is plenty; log `on_attempt` to see why |
-| `KeyError: unknown model` | model id not in the price table | `agentguard.register_price("your-model", input, output)` |
+| `KeyError: unknown model` | model id not in the price table | `agentrig.register_price("your-model", input, output)` |
 | Cost looks 10x too low | usage counted as cached | check `normalize_usage` input, not your arithmetic |
 | Tool calls silently do nothing | arguments passed as a dict where a string was expected, or vice versa | both are accepted — check `registry.names()` matches the model's name |

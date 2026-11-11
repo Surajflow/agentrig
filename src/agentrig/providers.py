@@ -1,4 +1,4 @@
-"""Small adapters between providers' shapes and agentguard's neutral ones.
+"""Small adapters between providers' shapes and agentrig's neutral ones.
 
 Every provider spells the same three things differently: tool declarations,
 token usage, and where the text hides in a response. These functions translate
@@ -73,7 +73,7 @@ def tool_spec(tool: Any, provider: str = "openai") -> dict[str, Any]:
 
 
 def normalize_usage(provider: str, payload: Mapping[str, Any] | None) -> Usage:
-    """Convert a provider's usage block into :class:`~agentguard.tokens.Usage`."""
+    """Convert a provider's usage block into :class:`~agentrig.tokens.Usage`."""
     data = dict(payload or {})
 
     if provider in ("openai", "openai_compatible"):
@@ -135,7 +135,7 @@ def extract_tool_calls(provider: str, response: Mapping[str, Any]) -> list[dict[
     """Return tool calls as ``[{"id", "name", "arguments"}]`` with JSON arguments.
 
     ``arguments`` is always a dict, so you can hand it straight to
-    :meth:`~agentguard.tools.ToolRegistry.dispatch`.
+    :meth:`~agentrig.tools.ToolRegistry.dispatch`.
     """
     import json
 

@@ -1,14 +1,14 @@
 import json
 import unittest
 
-from agentguard.providers import (
+from agentrig.providers import (
     extract_text,
     extract_tool_calls,
     normalize_usage,
     tool_spec,
 )
-from agentguard.tokens import Usage
-from agentguard.tools import Tool
+from agentrig.tokens import Usage
+from agentrig.tools import Tool
 
 
 def _tool():

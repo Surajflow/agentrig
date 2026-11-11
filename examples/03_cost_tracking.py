@@ -3,7 +3,7 @@
 Run:  python examples/03_cost_tracking.py
 """
 
-from agentguard import CostTracker, Usage, estimate_tokens, fit_context, get_price, normalize_usage
+from agentrig import CostTracker, Usage, estimate_tokens, fit_context, get_price, normalize_usage
 
 # A realistic mix: a big model for planning, a cheap one for the bulk work.
 RUNS = [

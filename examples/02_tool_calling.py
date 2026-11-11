@@ -9,7 +9,7 @@ failure mode comes back as a JSON error the model can recover from.
 import json
 from typing import Literal, Optional
 
-from agentguard import ToolRegistry, extract_tool_calls, tool
+from agentrig import ToolRegistry, extract_tool_calls, tool
 
 INR_PER_USD = 88.0
 

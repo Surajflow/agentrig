@@ -1,8 +1,8 @@
-# agentguard
+# agentrig
 
 **The reliability layer for LLM agents. Zero dependencies, any model.**
 
-[![CI](https://github.com/Surajflow/agentguard/actions/workflows/ci.yml/badge.svg)](https://github.com/Surajflow/agentguard/actions/workflows/ci.yml)
+[![CI](https://github.com/Surajflow/agentrig/actions/workflows/ci.yml/badge.svg)](https://github.com/Surajflow/agentrig/actions/workflows/ci.yml)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Dependencies: none](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](pyproject.toml)
@@ -11,7 +11,7 @@
 Your agent works in the demo and falls apart in production, always for the same
 five reasons:
 
-| What breaks | What `agentguard` gives you |
+| What breaks | What `agentrig` gives you |
 | --- | --- |
 | The model returns prose around your JSON, or a string where you wanted a number | [`structured_call`](#1-structured-output-that-repairs-itself) re-prompts with the exact validation errors until it parses |
 | Your retry loop hammers a dead endpoint, or gives up on a 429 that would have healed | [`retry_call`](#2-retries-that-know-why) classifies the error first, then backs off only where it helps |
@@ -27,14 +27,14 @@ provider SDK. Nothing to migrate: your model call stays your model call.
 ## Install
 
 ```bash
-pip install agentguard
+pip install agentrig
 ```
 
 Working from a clone:
 
 ```bash
-git clone https://github.com/Surajflow/agentguard
-cd agentguard
+git clone https://github.com/Surajflow/agentrig
+cd agentrig
 pip install -e ".[dev]"
 python -m unittest discover -s tests    # or: pytest
 ```
@@ -53,7 +53,7 @@ python examples/04_full_agent_loop.py
 ## 1. Structured output that repairs itself
 
 ```python
-from agentguard import structured_call, schema_instruction
+from agentrig import structured_call, schema_instruction
 
 INVOICE = {
     "type": "object",
@@ -74,7 +74,7 @@ result = structured_call(call_model, messages, INVOICE)
 print(result.value, result.attempts)   # {'vendor': 'Brightline Traders', ...} 2
 ```
 
-When the first reply fails, `agentguard` appends the model's own output plus a
+When the first reply fails, `agentrig` appends the model's own output plus a
 repair prompt naming every violation, and tries again:
 
 ```
@@ -91,7 +91,7 @@ prefixed or prose-wrapped text, braces inside strings included), `validate`
 ## 2. Retries that know *why*
 
 ```python
-from agentguard import RetryPolicy, retry_call
+from agentrig import RetryPolicy, retry_call
 
 policy = RetryPolicy(max_attempts=5, base_delay=0.5, max_delay=30, jitter=True)
 
@@ -117,7 +117,7 @@ spreads a retry storm instead of synchronising it.
 
 ```python
 from typing import Literal, Optional
-from agentguard import ToolRegistry, tool
+from agentrig import ToolRegistry, tool
 
 @tool
 def refund_estimate(order_id: str, reason: Optional[Literal["damaged", "late"]] = None) -> dict:
@@ -161,7 +161,7 @@ response dict into `{"id", "name", "arguments"}` with `arguments` already a dict
 ## 4. Cost and context
 
 ```python
-from agentguard import CostTracker, Usage, normalize_usage
+from agentrig import CostTracker, Usage, normalize_usage
 
 tracker = CostTracker(budget=0.50)
 
@@ -189,7 +189,7 @@ fitted, dropped = fit_context(messages, max_tokens=1200, reserve=300)
 ## 5. Tracing you can replay
 
 ```python
-from agentguard import Tracer
+from agentrig import Tracer
 
 with Tracer("runs/agent_loop.jsonl") as tracer:
     tracer.event("run_started", model="gpt-4o-mini")
@@ -216,15 +216,15 @@ re-raised, so tracing never changes your control flow.
 ## Command line
 
 ```bash
-agentguard validate schema.json data.json    # exit 1 + readable errors when invalid
-agentguard cost --model gpt-4o --input 1200000 --output 300000 --calls 1000
-agentguard models                            # the price table
-agentguard trace runs/agent_loop.jsonl --timeline
-agentguard doctor                            # self-check: extraction, repair loop, pricing
+agentrig validate schema.json data.json    # exit 1 + readable errors when invalid
+agentrig cost --model gpt-4o --input 1200000 --output 300000 --calls 1000
+agentrig models                            # the price table
+agentrig trace runs/agent_loop.jsonl --timeline
+agentrig doctor                            # self-check: extraction, repair loop, pricing
 ```
 
 ```
-$ agentguard trace runs/agent_loop.jsonl
+$ agentrig trace runs/agent_loop.jsonl
 trace   runs/agent_loop.jsonl
 runs    1
 spans   5   events 3   errors 0
@@ -241,7 +241,7 @@ by span
 ## What it deliberately does not do
 
 No agent framework, no prompt templates, no vector store, no HTTP client, no
-provider SDKs, no telemetry. `agentguard` is the layer *under* whatever you already
+provider SDKs, no telemetry. `agentrig` is the layer *under* whatever you already
 use — LangGraph, Pydantic AI, the OpenAI SDK, or a `while` loop you wrote
 yourself. If you swap providers next month, none of this code changes.
 
@@ -253,14 +253,14 @@ your own backend if you need aggregation.
 ## Project layout
 
 ```
-src/agentguard/
+src/agentrig/
   schema.py     parse_json, validate, structured_call
   retry.py      classify_error, RetryPolicy, retry_call
   tokens.py     Usage, CostTracker, estimate_tokens, fit_context
   tools.py      tool, Tool, ToolRegistry
   providers.py  tool_spec, normalize_usage, extract_text, extract_tool_calls
   trace.py      Tracer, load, summary, replay
-  cli.py        the agentguard command
+  cli.py        the agentrig command
 tests/          152 tests, standard library only
 examples/       four runnable, offline, no-API-key demos
 docs/           quickstart and design notes

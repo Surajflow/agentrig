@@ -1,4 +1,4 @@
-# Contributing to agentguard
+# Contributing to agentrig
 
 Thanks for looking. This project stays useful only if it stays small, so the
 rules below are strict on purpose.
@@ -8,7 +8,7 @@ rules below are strict on purpose.
 1. **No runtime dependencies.** Standard library only. A PR that adds a
    `dependencies = [...]` entry will be declined — offer it as an optional extra
    instead (see `exact` in `pyproject.toml`).
-2. **No provider lock-in.** Nothing in `src/agentguard/` may import a provider SDK.
+2. **No provider lock-in.** Nothing in `src/agentrig/` may import a provider SDK.
    Provider differences belong in `providers.py` as plain dict translation.
 3. **Every behaviour gets a test.** Standard-library `unittest`, no fixtures
    needed, no network, no API keys.
@@ -16,8 +16,8 @@ rules below are strict on purpose.
 ## Getting started
 
 ```bash
-git clone https://github.com/Surajflow/agentguard
-cd agentguard
+git clone https://github.com/Surajflow/agentrig
+cd agentrig
 pip install -e ".[dev]"
 make test          # or: python -m unittest discover -s tests -v
 make lint
@@ -31,7 +31,7 @@ make examples
 - New public functions are exported from `__init__.py`, added to `__all__`, and
   documented in the README section they belong to.
 - Error messages say what went wrong **and** what to do:
-  `unknown model 'x'; add it with agentguard.register_price('x', input, output)`.
+  `unknown model 'x'; add it with agentrig.register_price('x', input, output)`.
 - Docstrings explain the trade-off, not just the signature.
 
 ## Ideas that would genuinely help

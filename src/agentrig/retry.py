@@ -5,7 +5,7 @@ context-overflow needs a shorter prompt, not another attempt. This module
 classifies the failure first, then backs off with full jitter (the AWS
 recommendation) only for the errors that can actually heal.
 
-    >>> from agentguard import retry_call
+    >>> from agentrig import retry_call
     >>> text = retry_call(lambda: call_model(prompt))
 
 Works with any SDK: the classifier reads ``status_code`` / ``status`` /
